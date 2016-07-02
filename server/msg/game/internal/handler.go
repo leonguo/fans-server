@@ -10,7 +10,6 @@ import (
 func init() {
     // 向当前模块（game 模块）注册 Hello 消息的消息处理函数 handleHello
     handler(&msg.Hello{}, handleHello)
-    handler(&msg.UserInfo{}, handleUserInfo)
 }
 
 func handler(m interface{}, h interface{}) {
@@ -30,20 +29,4 @@ func handleHello(args []interface{}) {
     a.WriteMsg(&msg.Hello{
         Name: "client",
     })
-}
-
-func handleUserInfo(args []interface{}) {
-
-   m := args[0].(*msg.UserInfo)
-    // 消息的发送者
-    a := args[1].(gate.Agent)
-
-    // 输出收到的消息的内容
-    log.Debug("cmd %v :%v",m.Cmd, m.UserId)
-
-    // 给发送者回应一个 Hello 消息
-    a.WriteMsg(&msg.Hello{
-        Name: "client",
-    })
-
 }
