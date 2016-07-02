@@ -11,6 +11,7 @@ import (
 
 func main() {
 	lconf.LogLevel = conf.Server.LogLevel
+
 	lconf.LogPath = conf.Server.LogPath
 
 	leaf.Run(
