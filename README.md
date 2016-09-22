@@ -1,4 +1,4 @@
 # cards_server
-TCP/IP长连接服务
+同时支持TCP和WebSocket长连接服务
 
-demo: http://smart.guoxingjun.com
+聊天demo: http://smart.guoxingjun.com
