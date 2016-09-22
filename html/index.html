@@ -14,6 +14,7 @@
     <div class="row">
         <div class="col-md-1"><span>代号:</span></div>
         <div class="col-md-3" id="username" style="color: rebeccapurple"></div>
+        <div class="col-md-2" style="color: rebeccapurple">在线人数：<span id="online"></span></div>
         <div class="col-md-2 col-md-offset-4">
             <!-- Button trigger modal -->
             <button type="button" class="btn" data-toggle="modal" data-target="#myModal">
@@ -92,6 +93,12 @@
                 }));
                 start_len = 1;
             }
+            ws.send(JSON.stringify({
+                Online: {
+                    Number: 0,
+                    Cmd: "online",
+                }
+            }));
         };
         ws.onmessage = function (e) {
             // Receives a message.
@@ -105,20 +112,22 @@
                 var row_message = data.UserInfo.Message;
                 row_message = $("#x").text(row_message).html();
                 $("#container").append("<div class=\"row\">" + row_name + ':  ' + row_message + "</div>");
-            }
-            if (data.List != undefined) {
+            }else if (data.List != undefined) {
                 var arr = data.List.MessageJson;
-                $.each(arr.reverse(),function(index,item){
-                    if(item != '') {
+                $.each(arr.reverse(), function (index, item) {
+                    if (item != '') {
                         var list = $.parseJSON(item);
-                        var row_name = list.UserName;
-                        row_name = $("#x").text(row_name).html();
-                        var row_message = list.Message;
-                        row_message = $("#x").text(row_message).html();
-                        $("#container").append("<div class=\"row\">" + row_name + ':  ' + row_message + "</div>");
+                        if (list) {
+                            var row_name = list.UserName;
+                            row_name = $("#x").text(row_name).html();
+                            var row_message = list.Message;
+                            row_message = $("#x").text(row_message).html();
+                            $("#container").append("<div class=\"row\">" + row_name + ':  ' + row_message + "</div>");
+                        }
                     }
                 });
-
+            } else if (data.Online.Cmd != undefined) {
+                $("#online").html(data.Online.Number);
             }
             var len = $('#container').children('div').length;
             if (len > 20) {
@@ -164,6 +173,14 @@
             }
         });
         $("#data").focus();
+        setInterval(function () {
+            ws.send(JSON.stringify({
+                Online: {
+                    Number: 0,
+                    Cmd: "online",
+                }
+            }));
+        }, 10000);
     });
 </script>
 </body>
