@@ -12,6 +12,7 @@ func init() {
 	// 向当前模块（game 模块）注册 Hello 消息的消息处理函数 handleHello
 	handler(&msg.Hello{}, handleHello)
 	handler(&msg.UserInfo{}, handleUserInfo)
+	handler(&msg.Online{}, handleOnline)
 }
 
 func handler(m interface{}, h interface{}) {
@@ -87,4 +88,14 @@ func handleUserInfo(args []interface{}) {
 			a.WriteMsg(m)
 		}
 	}
+}
+
+func handleOnline(args []interface{}) {
+	// 收到的 Hello 消息
+	a := args[1].(gate.Agent)
+
+	a.WriteMsg(&msg.Online{
+		Number: len(agents),
+		Cmd: "online_response",
+	})
 }

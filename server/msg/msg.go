@@ -12,6 +12,7 @@ func init() {
     Processor.Register(&Hello{})
     Processor.Register(&UserInfo{})
     Processor.Register(&List{})
+    Processor.Register(&Online{})
 }
 
 // 一个结构体定义了一个 JSON 消息的格式
@@ -30,4 +31,11 @@ type UserInfo struct {
 type List struct {
     MessageJson [15]string
 }
+
+type Online struct {
+	Cmd string
+	Number int
+}
+
+
 
