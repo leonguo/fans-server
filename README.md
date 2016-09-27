@@ -2,7 +2,9 @@
 同时支持TCP和WebSocket长连接服务 
 server端：https://github.com/name5566/leaf
 
-聊天demo: http://smart.guoxingjun.com效果如图：
+聊天demo: http://smart.guoxingjun.coms     
+
+效果如图：
 
 ![alt text](http://smart.guoxingjun.com/image/chat.png "chat")
 
